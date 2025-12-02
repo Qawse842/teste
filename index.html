@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miffy - Coelhinho Aventureiro</title>
+    <style>
+        /* Paleta de Cores */
+        :root {
+            --coral-red: #FD665C;
+            --apricot-cream: #F8E2CF;
+            --whisper-white: #FAF7F5;
+            --soft-blue: #AAD1D9;
+            --text-dark: #333;
+            --button-text: #fff;
+        }
+
+        /* Estilos Gerais - AJUSTE AQUI para permitir a rolagem de toda a página */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-blue);
+            /* Removido display: flex e min-height: 100vh para permitir rolagem normal */
+        }
+
+        /* Container Principal (Cartão) - Ajustado para centralizar o bloco inicial */
+        .card {
+            background-color: var(--whisper-white);
+            width: 900px;
+            max-width: 90%;
+            /* Adicionado max-width para melhor visualização */
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            margin: 50px auto;
+            /* Centraliza o card inicial na tela */
+        }
+
+        /* Navegação */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--coral-red);
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--coral-red);
+        }
+
+        .auth-buttons .btn {
+            margin-left: 10px;
+        }
+
+        /* Botões - Adicionado 'transform' para o efeito JS */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+            /* TRANSITION Adicionada */
+        }
+
+        .btn-primary {
+            background-color: var(--coral-red);
+            color: var(--button-text);
+        }
+
+        .btn-primary:hover {
+            background-color: #e0554c;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--coral-red);
+            border: 2px solid var(--coral-red);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--apricot-cream);
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .text-content {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+        }
+
+        .info-block {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .info-block span {
+            margin-right: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .image-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .image-wrapper {
+            background-color: var(--apricot-cream);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            /* Adicionado transition para o efeito de flutuação */
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .main-image {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 20px;
+        }
+
+        /* Elemento de Destaque */
+        .highlight-box {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background-color: var(--coral-red);
+            color: var(--button-text);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(253, 102, 92, 0.3);
+        }
+
+        .highlight-box h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box p {
+            margin: 5px 0 0;
+            color: var(--button-text);
+            font-size: 0.9rem;
+        }
+
+        /* ESTILOS PARA AS NOVAS SEÇÕES */
+        section {
+            width: 900px;
+            max-width: 90%;
+            margin: 50px auto;
+            padding: 80px 40px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #historias {
+            background-color: var(--apricot-cream);
+            color: var(--text-dark);
+        }
+
+        #jogos {
+            background-color: var(--whisper-white);
+            color: var(--text-dark);
+            border: 1px solid #eee;
+        }
+
+        #sobre {
+            background-color: var(--coral-red);
+            color: var(--button-text);
+        }
+
+        #sobre p {
+            color: var(--button-text);
+            /* Garante que o texto seja branco nesta seção */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="images/logo.jpg" alt="Miffy Logo">
+                Miffy
+            </div>
+            <div class="nav-links">
+                <a href="#historias">Histórias</a>
+                <a href="#jogos">Jogos</a>
+                <a href="#sobre">Sobre</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="btn btn-secondary">Entrar</button>
+                <button class="btn btn-primary" id="signupBtn">Cadastrar</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="text-content">
+                <h1>Miffy, o Coelhinho Aventureiro</h1>
+                <p>Conheça Miffy, o coelhinho mais fofo e curioso do mundo! Junte-se a ela em suas aventuras diárias,
+                    aprendendo sobre amizade, natureza e muito mais em suas histórias encantadoras.</p>
+                <button class="btn btn-primary cta-button" id="exploreBtn">Explorar Aventuras</button>
+
+                <div class="info-block">
+                    <span>Novas histórias toda semana!</span>
+                    <span>|</span>
+                    <span>Diversão garantida para crianças.</span>
+                </div>
+            </div>
+
+            <div class="image-content">
+                <div class="image-wrapper">
+                    <img src="images/miffy-holding-ball.jpg" alt="Miffy com uma bola" class="main-image">
+                    <div class="highlight-box">
+                        <h3>Novo Livro!</h3>
+                        <p>Miffy vai à praia.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <section id="historias">
+        <h2>📖 Nossas Histórias</h2>
+        <p>Descubra os livros mais recentes da Miffy. Ela adora explorar novos lugares e fazer novos amigos!</p>
+        <ul>
+            <li>Miffy e o Jardim Secreto (Lançamento!)</li>
+            <li>Miffy vai à Praia</li>
+            <li>Miffy e o Presente de Aniversário</li>
+        </ul>
+        <button class="btn btn-primary">Ver todos os livros</button>
+    </section>
+
+    <section id="jogos">
+        <h2>🎮 Jogos Divertidos</h2>
+        <p>Aprenda brincando com a Miffy! Desenhe, pinte e resolva quebra-cabeças. Nossos jogos educativos são perfeitos
+            para o desenvolvimento infantil.</p>
+        <div
+            style="margin-top: 30px; border: 2px dashed var(--soft-blue); padding: 20px; text-align: center; border-radius: 15px;">
+            <p>Em breve: Miffy - O Jogo da Memória e o Jogo de Colorir!</p>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2>⭐ Sobre a Miffy</h2>
+        <p>Miffy (conhecida como Nijntje na Holanda) foi criada pelo renomado autor e ilustrador Dick Bruna em 1955. É
+            um ícone global de simplicidade, amizade e aventura.</p>
+        <p style="font-style: italic;">"É bom ser simples." - Dick Bruna</p>
+        <button class="btn btn-secondary" style="color: var(--button-text); border-color: var(--button-text);">Nossa
+            História Completa</button>
+    </section>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // -----------------------------------------------------------------
+            // 1. Efeito de Flutuação (Floating Effect) na Imagem Principal
+            // -----------------------------------------------------------------
+            const imageWrapper = document.querySelector('.image-wrapper');
+            if (imageWrapper) {
+                let isUp = true;
+                let position = 0;
+                const speed = 0.4; // Ajuste a velocidade da flutuação
+                const range = 5; // Altura máxima da flutuação em pixels
+
+                function floatImage() {
+                    if (isUp) {
+                        position += speed;
+                        if (position >= range) {
+                            isUp = false;
+                        }
+                    } else {
+                        position -= speed;
+                        if (position <= -range) {
+                            isUp = true;
+                        }
+                    }
+                    // Usa transform para melhor performance
+                    imageWrapper.style.transform = `translateY(${position}px)`;
+                    requestAnimationFrame(floatImage);
+                }
+
+                // Inicia a animação quando a página carrega
+                floatImage();
+            }
+
+            // -----------------------------------------------------------------
+            // 2. Interatividade dos Botões (Efeito de Escala/Zoom ao Focar)
+            // -----------------------------------------------------------------
+            const buttons = document.querySelectorAll('.btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('mouseover', () => {
+                    // Aumenta um pouco o botão ao passar o mouse
+                    button.style.transform = 'scale(1.03)';
+                    // A transição já está no CSS
+                });
+
+                button.addEventListener('mouseout', () => {
+                    // Volta ao tamanho normal ao tirar o mouse
+                    button.style.transform = 'scale(1)';
+                });
+            });
+
+            // -----------------------------------------------------------------
+            // 3. Alertas de Interatividade
+            // -----------------------------------------------------------------
+            document.getElementById('signupBtn').addEventListener('click', function () {
+                alert('🌟 Iniciando Cadastro! (Isso seria um formulário real...)');
+            });
+
+            document.getElementById('exploreBtn').addEventListener('click', function () {
+                alert('🗺️ Explorando o mundo de Miffy! Role a página ou use o menu.');
+            });
+
+            // -----------------------------------------------------------------
+            // 4. Rolagem Suave para Links Internos (Obrigatório para as Seções)
+            // -----------------------------------------------------------------
+            document.querySelectorAll('.nav-links a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    // Previne o salto abrupto padrão
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    // Garante que só tente rolar se o href for um ID válido
+                    if (targetId && targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+
+                        if (targetElement) {
+                            // Rola suavemente até o elemento de destino
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
